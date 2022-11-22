@@ -1,0 +1,15 @@
+apple
+banana
+fruit
+car
+train
+airplane
+engineer
+nurse
+soldier
+cake
+pizza
+bread
+bird
+chicken
+tiger

@@ -1,0 +1,4 @@
+cradle:
+  cabal:
+    - path: "./app/Hangman.hs"
+      component: "exe:Hangman"
