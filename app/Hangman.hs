@@ -193,5 +193,5 @@ const_listOfString_words :: [String]
 const_listOfString_words = ["apple","banana","fruit","car","train","airplane","engineer","nurse","soldier","cake","pizza","bread","bird","chicken","tiger"]
 
 clearScreenString :: String
-clearScreenString = "\n\n\n\n\n\n\n\n\n\n\n\n"
+clearScreenString = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
 
