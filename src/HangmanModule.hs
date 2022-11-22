@@ -16,17 +16,10 @@
 module HangmanModule where
 
 
-import qualified Data.ByteString.Short as SBS
-import qualified Data.ByteString.Char8       as BS8
 import           Data.Char
 import           Data.Either as Either
 import           Data.Foldable         as Fold
-import           Data.Maybe
-import           Data.String
-import qualified Data.String           as FS
 import           Prelude
-import           System.Environment (getArgs)
-import           System.Exit
 
 
 ---- data ----
@@ -70,8 +63,8 @@ isTupleTrue compareChar = isRight compareChar
 
 getCharForWord :: Either Char Char -> Char
 getCharForWord compareChar = case compareChar of
-                                (Left ch) -> emptyGuessChar
                                 (Right ch) -> ch
+                                _ -> emptyGuessChar
 --- print functions
 
 printGame :: GuessData -> String
