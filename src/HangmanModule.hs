@@ -24,10 +24,7 @@ import           Data.Foldable         as Fold
 import           Data.Maybe
 import           Data.String
 import qualified Data.String           as FS
-import           Data.Time.Clock
-import           Data.Time.Format
 import           Prelude
-import           System.Directory
 import           System.Environment (getArgs)
 import           System.Exit
 
