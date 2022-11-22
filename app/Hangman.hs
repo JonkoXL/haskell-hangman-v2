@@ -26,7 +26,7 @@ import           Prelude
 import           System.Directory
 import           System.Environment (getArgs)
 import           System.Exit
-
+import qualified HangmanModule         as Hangman
 
 
 ------------------------------------------------------
@@ -44,8 +44,9 @@ printMenu = do
 
   case menuInputOptionCharacter of
     '1' -> initializeHangmanBuiltInDictionary
-    '2' -> initializeHangmanHotSeat
-    '3' -> die $ const_string_Message_Hangman_Exit
+    '2' -> initializeHangmanUserDictionary
+    '3' -> initializeHangmanHotSeat
+    '4' -> die $ const_string_Message_Hangman_Exit
     _ -> printMenu
 
   printMenu
@@ -58,9 +59,19 @@ printMenu = do
 initializeHangmanBuiltInDictionary :: IO ()
 initializeHangmanBuiltInDictionary = do
                                       word <- getRandomWord const_listOfString_words
-                                      playHangManLoop $ initializeGuessWord $ word
+                                      playHangManLoop $ Hangman.initializeGuessWord $ word
                                       promptLine const_string_Message_PressAnyKey
                                       return ()
+initializeHangmanUserDictionary :: IO ()
+initializeHangmanUserDictionary = do 
+  
+  fileExists <- doesFileExist const_string_File_Hangman_Dictionary 
+  if ( not fileExists )
+    then printLine $ "\n" ++ const_string_Error_Hangman_DictionaryFileDoesNotExist ++ "\n"
+    else do
+      words <-readFile const_string_File_Hangman_Dictionary
+      randomWord <- getRandomWord $ lines $ words
+      playHangManLoop $ Hangman.initializeGuessWord randomWord
 
 getRandomWord :: [String] -> IO String
 getRandomWord listOfWords = do
@@ -75,23 +86,23 @@ initializeHangmanHotSeat = do
 
     wordToGuess <- promptLine const_string_Message_EnterWord
     printLine clearScreenString
-    playHangManLoop $ initializeGuessWord wordToGuess
+    playHangManLoop $ Hangman.initializeGuessWord wordToGuess
 
-playHangManLoop :: HangmanData -> IO ()
+playHangManLoop :: Hangman.HangmanData -> IO ()
 playHangManLoop hangmanData = do
     
     printLine clearScreenString
     printHangManGame $ hangmanData
 
     guessCharacter <- promptChar const_string_Message_EnterCharacter const_string_Error_NoCharacterEntered
-    let updatedHangmanData = doGuessForWord guessCharacter hangmanData
+    let updatedHangmanData = Hangman.doGuessForWord guessCharacter hangmanData
 
-    if isGuessed updatedHangmanData
-      then ( printLine $ const_string_Message_GameWon ++ printGame updatedHangmanData ++ "\n" )
+    if Hangman.isGuessed updatedHangmanData
+      then ( printLine $ const_string_Message_GameWon ++ Hangman.printGame updatedHangmanData ++ "\n" )
       else   playHangManLoop updatedHangmanData
 
-printHangManGame :: HangmanData -> IO ()
-printHangManGame hangmanData = printLine $ "\n" ++  printGame hangmanData
+printHangManGame :: Hangman.HangmanData -> IO ()
+printHangManGame hangmanData = printLine $ "\n" ++  Hangman.printGame hangmanData
 
 --- utils ---
 
@@ -148,7 +159,7 @@ const_string_Message_Hangman_Title :: String
 const_string_Message_Hangman_Title = "[ Hangman v1.0 ] "
 
 const_string_Message_Hangman_Menu :: String
-const_string_Message_Hangman_Menu = "Welcome to Hangman!\nPlease choose whether you want to\n1) Play against the computer, using a built-in dictionary\n2) Play in hotseat mode (enter a word by yourself)\n3) Exit\nOption: "
+const_string_Message_Hangman_Menu = "Welcome to Hangman!\nPlease choose whether you want to\n1) Play against the computer, using a built-in dictionary\n2) Play against the computer, using a 'words.txt' file in this application directory\n3) Play in hotseat mode (enter a word by yourself)\n4) Exit\nOption: "
 
 const_string_Message_Hangman_Exit :: String
 const_string_Message_Hangman_Exit = "Thank you for playing!"
