@@ -32,6 +32,7 @@ executable Hangman
                      , directory
                      , random
                      , text
+                     , time
                      , haskell-hangman
             
 
