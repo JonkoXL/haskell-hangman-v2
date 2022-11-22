@@ -30,7 +30,6 @@ executable Hangman
                      , base ^>=4.14.1.0
                      , bytestring
                      , directory
-                     , random
                      , text
                      , time
                      , haskell-hangman
